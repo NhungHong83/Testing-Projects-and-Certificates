@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "516ea30f-22c7-4370-bd9a-28d70ff9b3a5",
+		"name": "NhungNTH29_PracticeExam_API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21780301"
+	},
+	"item": [
+		{
+			"name": "Exercise1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Verify-code and title displayed\",function(){  \r",
+							"    var code = pm.response.json().block.code;\r",
+							"    pm.expect(code).to.be.equal(pm.variables.get(\"code\"));\r",
+							"    var title = pm.response.json().block.title;\r",
+							"    pm.expect(title).to.be.equal(pm.variables.get(\"title\"));\r",
+							"});\r",
+							"var check=true;\r",
+							"pm.test(\"Verify-categories name displayed\",function(){  \r",
+							"    var arr = [\"TikiNGON\", \"Giày thể thao nam\", \"Balo\", \"Bàn ghế làm việc\", \"Khẩu trang y tế\"];\r",
+							"    var res = pm.response.json();\r",
+							"    var resArr = res.items.map(item => item.name)\r",
+							"    for(var i=0; i<arr.length; i++ ){\r",
+							"        pm.expect(resArr).to.include(arr[i]);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://tiki.vn/api/personalish/v1/blocks/categories?block_code=featured_categories&trackity_id=8b7f2d46-ee29-60d0-1beb-b9d4af10415c",
+					"protocol": "https",
+					"host": [
+						"tiki",
+						"vn"
+					],
+					"path": [
+						"api",
+						"personalish",
+						"v1",
+						"blocks",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "block_code",
+							"value": "featured_categories"
+						},
+						{
+							"key": "trackity_id",
+							"value": "8b7f2d46-ee29-60d0-1beb-b9d4af10415c"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise2",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Exercise3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var body=JSON.parse(responseBody);\r",
+							"pm.test(\"Verify number events\",function(){\r",
+							"    var res = pm.response.json();\r",
+							"    // pm.expect(body.items.length).to.be.equal(parseInt(pm.variables.get(\"numProductCat\")));\r",
+							"    var resArr = res.items.map(item => item.children);\r",
+							"    pm.expect(resArr.length).to.be.equal(parseInt(pm.variables.get(\"numProductCat\")));\r",
+							"});\r",
+							"pm.test(\"Verify-tag name\",function(){\r",
+							"    var arr= [\"id\", \"parent_id\", \"name\", \"product_count\"];\r",
+							"    var teamObj = pm.response.json().items[0];\r",
+							"    arr.forEach((a)=>{\r",
+							"            pm.expect(teamObj).to.have.property(a);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://tiki.vn/api/personalish/v1/blocks/categories?block_code=featured_categories_tikingon&trackity_id=be6a2d5f-8f43-de8a-18a6-574f5a06ebd1",
+					"protocol": "https",
+					"host": [
+						"tiki",
+						"vn"
+					],
+					"path": [
+						"api",
+						"personalish",
+						"v1",
+						"blocks",
+						"categories"
+					],
+					"query": [
+						{
+							"key": "block_code",
+							"value": "featured_categories_tikingon"
+						},
+						{
+							"key": "trackity_id",
+							"value": "be6a2d5f-8f43-de8a-18a6-574f5a06ebd1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "code",
+			"value": "featured_categories",
+			"type": "string"
+		},
+		{
+			"key": "title",
+			"value": "Top categories in Home",
+			"type": "string"
+		},
+		{
+			"key": "numCategories",
+			"value": "20",
+			"type": "string"
+		},
+		{
+			"key": "numProductCat",
+			"value": "18",
+			"type": "string"
+		},
+		{
+			"key": "thumbnail_url",
+			"value": "salt.tikicdn.com",
+			"type": "string"
+		}
+	]
+}
